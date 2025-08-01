@@ -2368,6 +2368,7 @@ html.no-csstransitions .home-content__main {
   font-size: 1.8rem;
   line-height: 1.333;
   position: relative;
+  white-space: normal;
 }
 
 .about__line {
