@@ -3598,6 +3598,10 @@ footer .row {
   height: auto;
 }
 
+.cemail {
+  font-size: 1.2rem;
+}
+
 /* ------------------------------------------------------------------- 
  * responsive:
  * footer
