@@ -2312,7 +2312,8 @@ html.no-csstransitions .home-content__main {
   border-right: none;
 }
 
-.stats__count {
+.stats__count,
+.stats_add {
   font-family: "montserrat-bold", sans-serif;
   font-size: 8.4rem;
   line-height: 1;
@@ -3590,6 +3591,11 @@ footer .row {
 .go-top a:hover,
 .go-top a:focus {
   color: #ffffff;
+}
+
+.pswp__img {
+  max-width: 100% !important;
+  height: auto;
 }
 
 /* ------------------------------------------------------------------- 
