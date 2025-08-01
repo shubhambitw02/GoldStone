@@ -1034,15 +1034,15 @@
     <script src="js/main.js"></script>
 
     <script type="module">
-      // Import Firebase modules from CDN
-      import { initializeApp } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-app.js";
+      // contact-firebase.js
+      import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
       import {
         getFirestore,
         collection,
         addDoc,
-      } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-firestore.js";
+      } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
-      // Your Firebase config
+      // Firebase config
       const firebaseConfig = {
         apiKey: "AIzaSyCM7BfU0LU1Euh6kiJbGs04nRRzHRi3UY0",
         authDomain: "goldstone-multiventures.firebaseapp.com",
@@ -1057,45 +1057,66 @@
       const app = initializeApp(firebaseConfig);
       const db = getFirestore(app);
 
-      // Get form and other elements
+      // Form submission handler
       const form = document.getElementById("contactForm");
-      const loader = document.querySelector(".submit-loader");
-      const successMsg = document.querySelector(".message-success");
-      const errorMsg = document.querySelector(".message-warning");
 
       form.addEventListener("submit", async (e) => {
         e.preventDefault();
 
-        // Show loader
-        loader.style.display = "block";
-        successMsg.style.display = "none";
-        errorMsg.style.display = "none";
-
-        // Get form values
-        const name = document.getElementById("contactName").value;
-        const email = document.getElementById("contactEmail").value;
+        const nameInput = document.getElementById("contactName");
+        const emailInput = document.getElementById("contactEmail");
         const subject = document.getElementById("contactSubject").value;
         const message = document.getElementById("contactMessage").value;
 
+        const name = nameInput.value.trim();
+        const email = emailInput.value.trim();
+
+        const loader = document.querySelector(".submit-loader");
+        const success = document.querySelector(".message-success");
+        const warning = document.querySelector(".message-warning");
+
+        loader.style.display = "none";
+        success.style.display = "none";
+        warning.style.display = "none";
+
+        // Simple validations
+        const nameRegex = /^[a-zA-Z\s]+$/;
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+        if (!nameRegex.test(name)) {
+          warning.textContent = "Please enter a valid name (letters only).";
+          warning.style.display = "block";
+          nameInput.focus();
+          return;
+        }
+
+        if (!emailRegex.test(email)) {
+          warning.textContent = "Please enter a valid email address.";
+          warning.style.display = "block";
+          emailInput.focus();
+          return;
+        }
+
+        loader.style.display = "block";
+
         try {
-          // Send to Firestore
           await addDoc(collection(db, "contacts"), {
             name,
             email,
             subject,
             message,
-            createdAt: new Date(),
+            timestamp: new Date(),
           });
 
-          // Clear form and show success
+          loader.style.display = "none";
+          success.textContent = "Your message was sent, thank you!";
+          success.style.display = "block";
           form.reset();
-          loader.style.display = "none";
-          successMsg.style.display = "block";
         } catch (err) {
-          // Show error
-          console.error("Submission failed", err);
+          console.error("Firebase Error:", err);
           loader.style.display = "none";
-          errorMsg.style.display = "block";
+          warning.textContent = "Something went wrong. Please try again.";
+          warning.style.display = "block";
         }
       });
     </script>
