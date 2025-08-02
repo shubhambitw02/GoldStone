@@ -2890,6 +2890,11 @@ html.no-csstransitions .home-content__main {
   font-size: 1.4rem;
 }
 
+.clients-testimonials p.testimonials__text {
+  font-size: 2rem;
+  margin-bottom: 2rem;
+}
+
 .clients-testimonials .testimonials .slick-arrow {
   position: absolute;
   top: 7.2rem;
@@ -3063,7 +3068,7 @@ html.no-csstransitions .home-content__main {
 }
 
 .contact-content {
-  max-width: 1000px;
+  max-width: 1100px;
   background-color: rgba(0, 0, 0, 0.2);
   color: rgba(255, 255, 255, 0.4);
   padding-top: 6rem;
