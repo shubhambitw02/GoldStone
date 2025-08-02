@@ -1169,6 +1169,42 @@
           warning.style.display = "block";
         }
       });
+
+      const subscribeForm = document.getElementById("mc-form");
+
+      if (subscribeForm) {
+        subscribeForm.addEventListener("submit", async (e) => {
+          e.preventDefault();
+
+          const emailInput = document.getElementById("mc-email");
+          const messageLabel = document.querySelector(".subscribe-message");
+
+          const email = emailInput.value.trim();
+          const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+          messageLabel.style.color = "red";
+          messageLabel.textContent = "";
+
+          if (!emailRegex.test(email)) {
+            messageLabel.textContent = "Please enter a valid email.";
+            return;
+          }
+
+          try {
+            await addDoc(collection(db, "subscriptions"), {
+              email,
+              timestamp: new Date(),
+            });
+
+            messageLabel.style.color = "green";
+            messageLabel.textContent = "Thank you for subscribing!";
+            subscribeForm.reset();
+          } catch (err) {
+            console.error("Subscription error:", err);
+            messageLabel.textContent = "Subscription failed. Try again.";
+          }
+        });
+      }
     </script>
   </body>
 </html>
