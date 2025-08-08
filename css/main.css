@@ -2930,6 +2930,10 @@ html.no-csstransitions .home-content__main {
   margin-top: -0.6px;
 }
 
+.word-break {
+  white-space: normal;
+}
+
 /* ------------------------------------------------------------------- 
  * responsive:
  * clients
